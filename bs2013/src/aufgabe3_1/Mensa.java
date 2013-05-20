@@ -1,15 +1,17 @@
 package aufgabe3_1;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Mensa implements Runnable{
-	private List<Kasse> kassen		= null;
-	private List<Thread> studenten	= null;
+	private Set<Kasse> kassen		= null;
+	private Set<Thread> studenten	= null;
 	
 	public Mensa(int number_students, int number_counters){
-		kassen 		= new ArrayList<Kasse>();
-		studenten 	= new ArrayList<Thread>();
+		kassen 		= new HashSet<Kasse>();
+		studenten 	= new HashSet<Thread>();
 
 		//Initialisiere Kassen
 		for (int i=0; i<number_counters; i++){
@@ -41,10 +43,13 @@ public class Mensa implements Runnable{
 		}
 	}
 	
-	public List<Kasse> getKassen() {
+	public Set<Kasse> getKassen() {
 		return kassen;
 	}
 	
+	/**
+	 * Den Betrieb aufnehmen (Methoden 'oeffnen()' und 'schliessen()')
+	 */
 	@Override
 	public void run() {
 		oeffnen();
