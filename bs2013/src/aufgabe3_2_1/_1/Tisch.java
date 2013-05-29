@@ -2,16 +2,10 @@ package aufgabe3_2_1._1;
 
 import java.util.Set;
 
-public class Tisch implements Runnable {
+public class Tisch {
+	final long RAUCHDAUER	= 3000; // milliseconds
+	
 	Set<Zubehoer> auflage	= null;
-
-	@Override
-	public void run() {
-		//bekommt vom Agenten etwas draufgelegt
-		//laesst Nur einen Raucher zur Zeit Rauchen
-		//Notified Raucher bei neuen sachen????
-		
-	}
 	
 	public synchronized void legeDrauf(Set<Zubehoer> zubehoere){
 		while(auflage!=null){
@@ -26,26 +20,29 @@ public class Tisch implements Runnable {
 		this.notifyAll();
 	}
 	
-	public synchronized Set<Zubehoer> nimmRunter(){
+	public synchronized void versucheRauchen(Raucher raucher){
+		
+		//Warte solange nichts auf dem Tisch liegt
 		while(auflage==null){ 
 			try {
 				this.wait();
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
-				return null;
 			}
 		}
-		Set<Zubehoer> temp = auflage;
-		return temp;
-	}
-	
-	public synchronized void legeZurueck(Set<Zubehoer> waren){
-		auflage = waren;
-		this.notifyAll();
-	}
-	
-	public void habeGeraucht(){
-		auflage = null;
-		this.notifyAll();
+		
+		//Falls das Richtige auf dem Tisch liegt, nimms runter und rauche
+		if (!auflage.contains(raucher.getMeinTeil())){
+			auflage = null;
+			System.out.println(raucher + " raucht.");
+			try {
+				Thread.currentThread();
+				Thread.sleep(RAUCHDAUER);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+
+		notify();
 	}
 }

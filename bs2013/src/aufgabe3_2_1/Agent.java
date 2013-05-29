@@ -11,8 +11,8 @@ public class Agent implements Runnable{
 	List<Zubehoer> kram		= null;
 	List<Zubehoer> tempset	= null;
 	Set<Zubehoer> subset	= null;
-	Tisch	meinTisch		= null;
-	Random rg			= new Random();
+	Tisch meinTisch			= null;
+	Random rg				= new Random();
 
 	public Agent(Tisch t){
 		meinTisch	= t;
@@ -41,11 +41,13 @@ public class Agent implements Runnable{
 
 			// sag Bescheid??
 			// Warte bis Raucher alles geregelt haben
+			/*
 			try {
 				wait();
 			} catch (InterruptedException e) {
 				System.out.println("weiter geht's");
 			}
+			//*/
 		}
 	}
 
