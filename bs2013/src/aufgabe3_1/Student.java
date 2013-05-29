@@ -1,15 +1,16 @@
 package aufgabe3_1;
 
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 public class Student implements Runnable {
-	private Mensa mensa	= null;
+	private Set<Kasse> kassen	= null;
 	private String name	= null;
 	private Random rg	= new Random();
 	
-	public Student(Mensa m){
-		this.mensa 	= m;
+	public Student(Set<Kasse> k){
+		this.kassen = k;
 		this.name	= UUID.randomUUID().toString();
 	}
 
@@ -20,7 +21,7 @@ public class Student implements Runnable {
 			//suche kuerzeste kassenschlange
 			Kasse currentMinKasse 	= null;
 			int currentMinLength	= Integer.MAX_VALUE;
-			for (Kasse k: mensa.getKassen()){
+			for (Kasse k: kassen){
 				if (k.getQueueLength() < currentMinLength){
 					currentMinKasse		= k;
 					currentMinLength	= k.getQueueLength(); //Koennte an dieser Stelle schon wieder anders sein...
@@ -55,6 +56,16 @@ public class Student implements Runnable {
 				Thread.currentThread().interrupt();
 				gehNachhause();
 			}
+			
+			//essen
+			try {
+				System.out.println("Student " + name + " macht irgendwas");
+				Thread.sleep(rg.nextInt(Constants.ZWISCHEN_TIME));
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+				gehNachhause();
+			}
+
 		}
 	}
 	

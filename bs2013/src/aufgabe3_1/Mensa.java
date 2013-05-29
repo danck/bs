@@ -20,7 +20,7 @@ public class Mensa implements Runnable{
 		
 		//Initialisiere Studenten
 		for (int i=0; i<number_students; i++){
-			studenten.add(new Thread(new Student(this)));
+			studenten.add(new Thread(new Student(kassen)));
 		}
 
 	}

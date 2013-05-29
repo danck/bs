@@ -10,7 +10,8 @@ public class Constants {
 	
 	//Student
 	public static final int MAX_EATING_TIME	= 10000;
-	public static final int MAX_PAY_TIME	= 2000;
+	public static final int MAX_PAY_TIME	= 500;
+	public static final int ZWISCHEN_TIME	= 10000;
 	
 	//Kasse
 	public static final int MAX_CUSTOMERS_ALLOWED	= 1;
