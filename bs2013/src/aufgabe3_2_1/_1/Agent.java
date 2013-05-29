@@ -1,14 +1,18 @@
 package aufgabe3_2_1._1;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class Agent implements Runnable{
 	private List<Zubehoer> zubehoer	= null;
 	private Tisch tisch				= null;
+	private Random rg				= null;
 	
 	Agent(Tisch t){
+		rg = new Random();
 		tisch = t;
 		zubehoer = new ArrayList<Zubehoer>();
 		zubehoer.add(Zubehoer.matches);
@@ -19,11 +23,18 @@ public class Agent implements Runnable{
 	@Override
 	public void run() {
 		//legt zufaellig komponenten auf den Tisch
+		while(true){
+			legeAufTisch();
+		}
 	}
 	
 	private void legeAufTisch(){
-		Random rg = new Random();
-		//Zubehor = rg.nextInt(zubehoer.size());
+		Set<Zubehoer> temp = new HashSet<Zubehoer>();
+		for (Zubehoer z: zubehoer){
+			temp.add(z);
+		}
+		temp.remove(zubehoer.get(rg.nextInt(zubehoer.size())));
+		tisch.legeDrauf(temp);
 	}
 
 }
