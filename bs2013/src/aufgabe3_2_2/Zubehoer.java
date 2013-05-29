@@ -1,4 +1,4 @@
-package aufgabe3_2_1._1;
+package aufgabe3_2_2;
 
 public enum Zubehoer {
 	tobacco, paper, matches

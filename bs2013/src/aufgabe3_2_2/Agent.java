@@ -1,4 +1,4 @@
-package aufgabe3_2_1._1;
+package aufgabe3_2_2;
 
 import java.util.ArrayList;
 import java.util.HashSet;

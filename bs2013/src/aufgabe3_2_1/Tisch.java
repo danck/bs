@@ -1,48 +1,48 @@
 package aufgabe3_2_1;
 
-import java.util.HashSet;
-import java.util.Observable;
 import java.util.Set;
 
-/**
- * Singleton Tisch
- */
-public class Tisch extends Observable {
-	public Set<Zubehoer> zubehoer	= null;
+public class Tisch {
+	final long RAUCHDAUER	= 3000; // milliseconds
 	
-	public Tisch(){
-		this.zubehoer = new HashSet<Zubehoer>();
-	};
+	Set<Zubehoer> auflage	= null;
 	
-		
-	/**
-	 * Hinterlegt zwei Zubehoerteile auf dem Tisch
-	 * Die alten werden uberschrieben oder wurden schon von einem Raucher geloescht
-	 * Wird nur von dem einen Agenten bedient -> Keine Synchronisation
-	 */
-	public synchronized void legeDrauf(Set<Zubehoer> teile){
-		zubehoer = teile;
-		//zubehoerVerfuegbar = true;
-		notifyObservers(teile);
-	}
-
-	/**
-	 * Genau ein Raucher kann das ausgelegte Zubehoer benutzen
-	 * Wenn es einmal genommen wurde, kann es kein anderer Raucher nehmen
-	 */
-	public synchronized void benutzeZubehoer(Raucher r){
-		if (!zubehoer.contains(r.getMeinTeil())){
+	public synchronized void legeDrauf(Set<Zubehoer> zubehoere){
+		while(auflage!=null){
 			try {
-				System.out.println("Raucher " + r + " mit " + r.getMeinTeil() + " raucht");
-				Thread.currentThread();
-				Thread.sleep(5000);
+				this.wait();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Thread.currentThread().interrupt();
 			}
-		} else {
-			System.out.println(r + " hat nicht das Richtige");
 		}
+		auflage = zubehoere;
+		System.out.println(zubehoere);
+		this.notifyAll();
+	}
+	
+	public synchronized void versucheRauchen(Raucher raucher){
+		
+		//Warte solange nichts auf dem Tisch liegt
+		while(auflage==null){ 
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+		
+		//Falls das Richtige auf dem Tisch liegt, nimms runter und rauche
+		if (!auflage.contains(raucher.getMeinTeil())){
+			auflage = null;
+			System.out.println(raucher + " raucht.");
+			try {
+				Thread.currentThread();
+				Thread.sleep(RAUCHDAUER);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+
 		notify();
 	}
 }

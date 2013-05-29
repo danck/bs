@@ -6,19 +6,17 @@ public class Start {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Tisch t 	= new Tisch();
-		Thread a	= new Thread(new Agent(t));
-		Thread r1	= new Thread(new Raucher(Zubehoer.matches, t, a));
-		Thread r2	= new Thread(new Raucher(Zubehoer.paper, t, a));
-		Thread r3	= new Thread(new Raucher(Zubehoer.tobacco, t, a));
-
-
+		Tisch tisch 	= new Tisch();
+		Thread agent 	= new Thread(new Agent(tisch));
+		Thread raucher1	= new Thread(new Raucher(Zubehoer.matches, tisch));
+		Thread raucher2	= new Thread(new Raucher(Zubehoer.tobacco, tisch));
+		Thread raucher3	= new Thread(new Raucher(Zubehoer.paper, tisch));
 		
-
-		a.start();
-		r1.start();
-		r2.start();
-		r3.start();
+		agent.start();
+		raucher1.start();
+		raucher2.start();
+		raucher3.start();
 
 	}
+
 }
