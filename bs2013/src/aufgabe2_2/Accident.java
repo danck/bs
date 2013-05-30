@@ -17,7 +17,7 @@ public class Accident implements Runnable{
 		Random rg = new Random();
 		int millis;
 		//int number;
-		millis = rg.nextInt(2500);
+		millis = rg.nextInt(25000);
 		//number = rg.nextInt(opfer.size());
 		try {
 			Thread.sleep(millis);
